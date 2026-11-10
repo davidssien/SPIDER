@@ -1,19 +1,14 @@
 CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -Wextra
+CXXFLAGS = -std=c++17 -O2 -Wall -Wextra
 SDLFLAGS = $(shell sdl2-config --cflags --libs)
 
-TARGET = app
-SRC = $(wildcard src/*.cpp)
+app: src/main.cpp Makefile
+	$(CXX) $(CXXFLAGS) src/main.cpp -o app $(SDLFLAGS)
 
-all: $(TARGET)
-
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET) $(SDLFLAGS)
-
-run: all
-	./$(TARGET)
+run: app
+	./app
 
 clean:
-	rm -f $(TARGET)
+	rm -f app
 
-.PHONY: all run clean
+.PHONY: run clean
